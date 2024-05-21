@@ -1,0 +1,6 @@
+[
+    { "name": "Diamond", "image": "images/diamond.png" },
+    { "name": "Ruby", "image": "images/ruby.png" },
+    { "name": "Emerald", "image": "images/emerald.png" },
+    { "name": "Sapphire", "image": "images/sapphire.png" }
+]

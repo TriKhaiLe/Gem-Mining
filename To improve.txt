@@ -1,0 +1,9 @@
++ thêm phân loại cảm xúc & câu phát biểu tương ứng
+eg: hôm nay bạn cười tươi như <Vật phẩm>
+
++ phân loại vật phẩm: đá quý, động vật, loài hoa
++ chuyển logic chọn đá quý qua be, nhận vào ảnh, trả về tên loại đá quý
++ lưu ảnh về máy
++ tích hợp đăng nhập như unsilent
++ gửi token 
+	
