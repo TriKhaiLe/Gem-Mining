@@ -1,6 +1,15 @@
 body {
     text-align: center;
     font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #caf0fc, #f0a6ff); /* Nền gradient tuyến tính */
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background 1s ease; /* Thêm transition để làm mượt chuyển đổi màu nền */
 }
 
 video {
@@ -9,28 +18,72 @@ video {
     border: 1px solid black;
 }
 
-#result-frame {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #000;
-    margin-top: 20px;
-    padding: 10px;
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: transform 0.3s ease;
 }
 
-#snapshot {
-    width: 320px;
-    height: 240px;
-    border: 1px solid black;
+.frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    padding: 10px;
+    margin-top: 20px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.snapshot {
+    border: 2px solid black;
     margin-right: 20px;
 }
 
-#gem-display img {
-    width: 100px;
-    height: 100px;
+.gem-display img {
+    border: 2px solid black;
 }
 
-#smile-result {
-    margin-top: 20px;
-    font-size: 24px;
+.smile-result {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Hiệu ứng spinning */
+.spinning {
+    animation: spin 1s linear infinite; /* Tăng tốc độ quay gấp đôi */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Màu cho các loại đá quý và củ khoai lang */
+.diamond {
+    color: #b9f2ff; /* Màu xanh dương */
+    border-color: #b9f2ff;
+}
+
+.ruby {
+    color: #ff8080; /* Màu đỏ */
+    border-color: #ff8080;
+}
+
+.emerald {
+    color: #66ff66; /* Màu xanh lá cây */
+    border-color: #66ff66;
+}
+
+.sapphire {
+    color: #668cff; /* Màu xanh lam */
+    border-color: #668cff;
+}
+
+.potato {
+    color: #d2691e; /* Màu nâu */
+    border-color: #d2691e;
 }

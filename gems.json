@@ -1,4 +1,8 @@
 [
+    {
+        "name": "Củ khoai lang",
+        "image": "images/sweet-potato.png"
+    },
     { "name": "Diamond", "image": "images/diamond.png" },
     { "name": "Ruby", "image": "images/ruby.png" },
     { "name": "Emerald", "image": "images/emerald.png" },
