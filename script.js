@@ -99,40 +99,28 @@ function handleCapture() {
 // Gắn sự kiện click cho nút chụp ảnh
 captureButton.addEventListener('click', handleCapture);
 
-// Hàm tạo giá trị màu ngẫu nhiên cho gradient gần với màu hiện tại
-function getRandomColorNear(hex) {
-    let r = parseInt(hex.slice(1, 3), 16);
-    let g = parseInt(hex.slice(3, 5), 16);
-    let b = parseInt(hex.slice(5, 7), 16);
-
-    // Giảm phạm vi thay đổi xuống -10 đến +10
-    r = Math.min(255, Math.max(0, r + Math.floor(Math.random() * 21) - 10));
-    g = Math.min(255, Math.max(0, g + Math.floor(Math.random() * 21) - 10));
-    b = Math.min(255, Math.max(0, b + Math.floor(Math.random() * 21) - 10));
-
-    return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-}
-
-// Hàm thay đổi màu nền gradient tuyến tính
-function changeBackground() {
-    const bodyStyle = getComputedStyle(document.body);
-    const currentBackground = bodyStyle.backgroundImage;
-
-    const regex = /rgb\((\d+), (\d+), (\d+)\)/g;
-    const matches = [...currentBackground.matchAll(regex)];
-    const currentColor1 = matches[0] ? rgbToHex(matches[0][1], matches[0][2], matches[0][3]) : '#ff7e5f';
-    const currentColor2 = matches[1] ? rgbToHex(matches[1][1], matches[1][2], matches[1][3]) : '#feb47b';
-
-    const color1 = getRandomColorNear(currentColor1);
-    const color2 = getRandomColorNear(currentColor2);
-
-    document.body.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
-}
-
 // Hàm chuyển đổi RGB sang HEX
 function rgbToHex(r, g, b) {
     return `#${parseInt(r).toString(16).padStart(2, '0')}${parseInt(g).toString(16).padStart(2, '0')}${parseInt(b).toString(16).padStart(2, '0')}`;
 }
 
-// Thay đổi màu nền mỗi 1.5 giây
-//setInterval(changeBackground, 1500);
+// Khai báo biến lưu trữ đối tượng ClipboardJS
+let clipboard;
+
+// Hàm sao chép hình ảnh từ khung div vào clipboard
+function copyFrameToClipboard() {
+    html2canvas(frame).then(canvas => {
+        canvas.toBlob(blob => {
+            const item = new ClipboardItem({ "image/png": blob });
+            navigator.clipboard.write([item]).then(() => {
+                console.log('Hình ảnh đã được sao chép vào clipboard.');
+            }).catch(error => {
+                console.error('Sao chép hình ảnh thất bại:', error);
+            });
+        });
+    });
+}
+
+// Gắn sự kiện click cho nút sao chép
+copyButton.addEventListener('click', copyFrameToClipboard);
+
