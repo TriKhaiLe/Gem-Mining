@@ -103,9 +103,14 @@ captureButton.addEventListener('click', handleCapture);
 function rgbToHex(r, g, b) {
     return `#${parseInt(r).toString(16).padStart(2, '0')}${parseInt(g).toString(16).padStart(2, '0')}${parseInt(b).toString(16).padStart(2, '0')}`;
 }
-
-// Khai báo biến lưu trữ đối tượng ClipboardJS
-let clipboard;
+// Hàm hiển thị toast
+function showToast(message) {
+    toast.innerText = message;
+    toast.className = "toast show";
+    setTimeout(() => {
+        toast.className = "toast";
+    }, 3000);
+}
 
 // Hàm sao chép hình ảnh từ khung div vào clipboard
 function copyFrameToClipboard() {
@@ -113,7 +118,7 @@ function copyFrameToClipboard() {
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
             navigator.clipboard.write([item]).then(() => {
-                console.log('Hình ảnh đã được sao chép vào clipboard.');
+                showToast('Hình ảnh đã được sao chép vào clipboard.');
             }).catch(error => {
                 console.error('Sao chép hình ảnh thất bại:', error);
             });

@@ -12,6 +12,31 @@ body {
     transition: background 1s ease; /* Thêm transition để làm mượt chuyển đổi màu nền */
 }
 
+/* Toast styles */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    transform: translateX(-50%);
+    transition: visibility 0.5s, opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
+
 video {
     width: 320px;
     height: 240px;
@@ -39,7 +64,7 @@ button {
 
 .snapshot {
     border: 2px solid black;
-    margin-right: 20px;
+    margin: 20px;
 }
 
 .gem-display img {
