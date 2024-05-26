@@ -3,6 +3,15 @@ const captureButton = document.getElementById('capture');
 const snapshot = document.getElementById('snapshot');
 const smileResult = document.getElementById('smile-result');
 const gemDisplay = document.getElementById('gem-display');
+const frame = document.getElementById('frame');
+const copyButton = document.getElementById('copyButton');
+const saveButton = document.getElementById('saveButton');
+const toast = document.getElementById('toast');
+const clickCount = document.getElementById('click-count');
+const itemsList = document.getElementById('items-list');
+
+let clickCounter = 0;
+let itemsReceived = {};
 
 // Yêu cầu quyền truy cập camera
 navigator.mediaDevices.getUserMedia({ video: true })
@@ -51,9 +60,23 @@ function getRandomItem(items) {
     return items[cumulativeWeights.findIndex(cumulativeWeight => random < cumulativeWeight)];
 }
 
+// Hàm cập nhật danh sách vật phẩm nhận được
+function updateItemsList() {
+    itemsList.innerHTML = '';
+    for (const [item, count] of Object.entries(itemsReceived)) {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${item}: ${count}`;
+        itemsList.appendChild(listItem);
+    }
+}
+
 // Hàm xử lý khi chụp ảnh và nhận diện khuôn mặt
 function handleCapture() {
+    // Vô hiệu hóa nút chụp ảnh
+    captureButton.disabled = true;
     captureButton.classList.add('spinning');
+    clickCounter += 1;
+    clickCount.textContent = `Số lần chụp ảnh: ${clickCounter}`;
 
     const imageData = captureFrame(video);
 
@@ -79,7 +102,17 @@ function handleCapture() {
 
                         smileResult.innerText = `Khuôn mặt được nhận diện! Bạn nhận được: ${randomGem.name}`;
                         gemDisplay.innerHTML = `<img src="${randomGem.image}" alt="${randomGem.name}" class="${gemClassName}">`;
+
+                        if (itemsReceived[randomGem.name]) {
+                            itemsReceived[randomGem.name] += 1;
+                        } else {
+                            itemsReceived[randomGem.name] = 1;
+                        }
+                        updateItemsList();
                         captureButton.classList.remove('spinning');
+                    }).finally(() => {
+                        // Kích hoạt lại nút chụp ảnh sau khi xử lý xong
+                        captureButton.disabled = false;
                     });
             } else {
                 smileResult.innerText = "Không nhận diện được khuôn mặt.";
@@ -88,21 +121,21 @@ function handleCapture() {
                 snapshot.className = "snapshot";
                 gemDisplay.className = "gem-display";
                 captureButton.classList.remove('spinning');
+                // Kích hoạt lại nút chụp ảnh sau khi xử lý xong
+                captureButton.disabled = false;
             }
         })
         .catch(error => {
             console.error('Error:', error);
             captureButton.classList.remove('spinning');
+            // Kích hoạt lại nút chụp ảnh sau khi xử lý xong
+            captureButton.disabled = false;
         });
 }
 
 // Gắn sự kiện click cho nút chụp ảnh
 captureButton.addEventListener('click', handleCapture);
 
-// Hàm chuyển đổi RGB sang HEX
-function rgbToHex(r, g, b) {
-    return `#${parseInt(r).toString(16).padStart(2, '0')}${parseInt(g).toString(16).padStart(2, '0')}${parseInt(b).toString(16).padStart(2, '0')}`;
-}
 // Hàm hiển thị toast
 function showToast(message) {
     toast.innerText = message;
@@ -112,9 +145,9 @@ function showToast(message) {
     }, 3000);
 }
 
-// Hàm sao chép hình ảnh từ khung div vào clipboard
+// Hàm sao chép hình ảnh từ toàn bộ body vào clipboard
 function copyFrameToClipboard() {
-    html2canvas(frame).then(canvas => {
+    html2canvas(document.body).then(canvas => {
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
             navigator.clipboard.write([item]).then(() => {
@@ -129,3 +162,16 @@ function copyFrameToClipboard() {
 // Gắn sự kiện click cho nút sao chép
 copyButton.addEventListener('click', copyFrameToClipboard);
 
+// Hàm lưu hình ảnh từ toàn bộ body về máy
+function saveFrameToFile() {
+    html2canvas(document.body).then(canvas => {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'screenshot.png';
+        link.click();
+        showToast('Hình ảnh đã được lưu về máy.');
+    });
+}
+
+// Gắn sự kiện click cho nút lưu ảnh
+saveButton.addEventListener('click', saveFrameToFile);

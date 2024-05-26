@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
     <meta charset="UTF-8">
-    <title>Shop nụ hề</title>
+    <title>Nụ cười bạn hôm nay đáng giá bao nhiêu</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Nụ hài = Phần thưởng</h1>
+    <div class="info">
+        <p id="click-count">Số lần chụp ảnh: 0</p>
+        <ul id="items-list">Danh sách vật phẩm đã nhận:</ul>
+    </div>
+    <h1>Nụ cười bạn hôm nay đáng giá bao nhiêu</h1>
     <video id="video" autoplay></video>
     <button id="capture">Chụp Ảnh</button>
-    <button id="copyButton">Sao chép ảnh</button>
-    <div id="toast" class="toast"></div>
-
     <div id="frame" class="frame">
         <canvas id="snapshot" class="snapshot"></canvas>
         <div id="gem-display" class="gem-display"></div>
     </div>
     <div id="smile-result" class="smile-result"></div>
+    <button id="copyButton">Sao chép ảnh</button>
+    <button id="saveButton">Lưu ảnh</button>
+    <div id="toast" class="toast"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
