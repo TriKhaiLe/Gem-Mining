@@ -24,6 +24,10 @@ body {
     z-index: 1000;
 }
 
+#capture-button {
+    font-size: 30px;
+}
+
 #items-list {
     list-style-type: none;
     padding: 0;
@@ -131,4 +135,19 @@ button {
 .potato {
     color: #d2691e; /* Màu nâu */
     border-color: #d2691e;
+}
+
+.frame,
+.snapshot,
+.gem-display img,
+button,
+video {
+    border-radius: 10px;
+}
+
+.time-info {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    color: white; /* Thay đổi màu sắc tùy theo nền */
 }

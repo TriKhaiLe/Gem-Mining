@@ -1,7 +1,9 @@
-+ tìm api detect smile
-+ phân loại vật phẩm: đá quý, động vật, loài hoa
-+ logic tỉ lệ các loại đá
++ phóng to nút chụp ảnh
++ bo tròn cạnh các khung hình và nút
++ thay việc đếm toàn bộ lần ấn bằng việc chỉ đếm khi capture thành công
++ hiển thị thêm block thông tin thời gian ở góc phải dưới của trang web
++ thêm nút tạo thên block cam
+
+* Task khó:
 + chuyển logic chọn đá quý qua be, nhận vào ảnh, trả về tên loại đá quý
-+ lưu ảnh về máy
 + đăng nhập 
-	

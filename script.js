@@ -1,5 +1,5 @@
 const video = document.getElementById('video');
-const captureButton = document.getElementById('capture');
+const captureButton = document.getElementById('capture-button');
 const snapshot = document.getElementById('snapshot');
 const smileResult = document.getElementById('smile-result');
 const gemDisplay = document.getElementById('gem-display');
@@ -22,6 +22,22 @@ navigator.mediaDevices.getUserMedia({ video: true })
         console.error("Error accessing webcam: ", error);
     });
 
+// Load face-api.js models
+Promise.all([
+    faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+    faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+    faceapi.nets.faceRecognitionNet.loadFromUri('/models')
+]).then(startVideo);
+
+// Start video
+function startVideo() {
+    navigator.mediaDevices.getUserMedia({ video: {} })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(err => console.error(err));
+}
+
 // Hàm lấy khung hình từ video
 function captureFrame(video) {
     const canvas = document.createElement('canvas');
@@ -32,15 +48,26 @@ function captureFrame(video) {
     return canvas.toDataURL('image/png');
 }
 
-// Hàm giả lập gửi ảnh đến API nhận diện khuôn mặt
-function detectFace(imageData) {
-    // Giả lập phản hồi từ API
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const detected = Math.random() > 0.5; // Giả lập tỉ lệ nhận diện khuôn mặt 50%
-            resolve({ detected });
-        }, 1000);
-    });
+// Hàm chuyển đổi base64 thành Blob
+function base64ToBlob(base64) {
+    const byteString = atob(base64.split(',')[1]);
+    const mimeString = base64.split(',')[0].split(':')[1].split(';')[0];
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const intArray = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+        intArray[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([arrayBuffer], { type: mimeString });
+}
+
+// Hàm kiểm tra khuôn mặt
+async function detectFace(imageData) {
+    const blob = base64ToBlob(imageData);
+    const img = await faceapi.bufferToImage(blob);
+    const detections = await faceapi.detectAllFaces(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
+    return detections.length > 0;
 }
 
 // Hàm lấy thông tin đá quý từ API
@@ -75,8 +102,6 @@ function handleCapture() {
     // Vô hiệu hóa nút chụp ảnh
     captureButton.disabled = true;
     captureButton.classList.add('spinning');
-    clickCounter += 1;
-    clickCount.textContent = `Số lần chụp ảnh: ${clickCounter}`;
 
     const imageData = captureFrame(video);
 
@@ -90,8 +115,8 @@ function handleCapture() {
     };
 
     detectFace(imageData)
-        .then(data => {
-            if (data.detected) {
+        .then(detected => {
+            if (detected) {
                 getGem()
                     .then(gems => {
                         const randomGem = getRandomItem(gems);
@@ -108,6 +133,8 @@ function handleCapture() {
                         } else {
                             itemsReceived[randomGem.name] = 1;
                         }
+                        clickCounter += 1;
+                        clickCount.textContent = `Số lượt nhận dạng thành công: ${clickCounter}`;
                         updateItemsList();
                         captureButton.classList.remove('spinning');
                     }).finally(() => {
