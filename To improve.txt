@@ -1,9 +1,8 @@
-+ phóng to nút chụp ảnh
-+ bo tròn cạnh các khung hình và nút
-+ thay việc đếm toàn bộ lần ấn bằng việc chỉ đếm khi capture thành công
 + hiển thị thêm block thông tin thời gian ở góc phải dưới của trang web
-+ thêm nút tạo thên block cam
++ thêm nút tạo thêm block cam
++ chỉnh tỉ lệ các loại đá & hiển thị danh sách
++ resposive cho width dưới 600 bị lỗi hiển thị info và probability, height dưới 900 bị mất element
 
 * Task khó:
 + chuyển logic chọn đá quý qua be, nhận vào ảnh, trả về tên loại đá quý
-+ đăng nhập 
++ lưu vật phẩm bằng nickname 

@@ -1,10 +1,27 @@
 [
     {
-        "name": "Củ khoai lang",
-        "image": "images/sweet-potato.png"
+        "name": "Diamond",
+        "image": "images/diamond.png",
+        "probability": 0.05
     },
-    { "name": "Diamond", "image": "images/diamond.png" },
-    { "name": "Ruby", "image": "images/ruby.png" },
-    { "name": "Emerald", "image": "images/emerald.png" },
-    { "name": "Sapphire", "image": "images/sapphire.png" }
+    {
+        "name": "Ruby",
+        "image": "images/ruby.png",
+        "probability": 0.10
+    },
+    {
+        "name": "Emerald",
+        "image": "images/emerald.png",
+        "probability": 0.15
+    },
+    {
+        "name": "Sapphire",
+        "image": "images/sapphire.png",
+        "probability": 0.20
+    },
+    {
+        "name": "Củ khoai lang",
+        "image": "images/sweet-potato.png",
+        "probability": 0.50
+    }
 ]

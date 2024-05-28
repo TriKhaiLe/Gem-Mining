@@ -9,6 +9,8 @@ const saveButton = document.getElementById('saveButton');
 const toast = document.getElementById('toast');
 const clickCount = document.getElementById('click-count');
 const itemsList = document.getElementById('items-list');
+const timeInfo = document.getElementById('current-time');
+const probabilityList = document.getElementById('probability-list');
 
 let clickCounter = 0;
 let itemsReceived = {};
@@ -78,10 +80,9 @@ function getGem() {
 
 // Hàm chọn ngẫu nhiên đá quý hoặc củ khoai lang
 function getRandomItem(items) {
-    const weights = items.map(item => item.name === "Củ khoai lang" ? 0.7 : 0.075);
-    const cumulativeWeights = weights.reduce((acc, weight) => {
+    const cumulativeWeights = items.reduce((acc, item) => {
         const last = acc.length ? acc[acc.length - 1] : 0;
-        return [...acc, last + weight];
+        return [...acc, last + item.probability];
     }, []);
     const random = Math.random();
     return items[cumulativeWeights.findIndex(cumulativeWeight => random < cumulativeWeight)];
@@ -95,6 +96,16 @@ function updateItemsList() {
         listItem.textContent = `${item}: ${count}`;
         itemsList.appendChild(listItem);
     }
+}
+
+// Hàm cập nhật danh sách tỷ lệ xuất hiện
+function updateProbabilityList(items) {
+    probabilityList.innerHTML = '';
+    items.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${item.name}: ${item.probability * 100}%`;
+        probabilityList.appendChild(listItem);
+    });
 }
 
 // Hàm xử lý khi chụp ảnh và nhận diện khuôn mặt
@@ -136,8 +147,9 @@ function handleCapture() {
                         clickCounter += 1;
                         clickCount.textContent = `Số lượt nhận dạng thành công: ${clickCounter}`;
                         updateItemsList();
-                        captureButton.classList.remove('spinning');
+                        updateProbabilityList(gems);
                     }).finally(() => {
+                        captureButton.classList.remove('spinning');
                         // Kích hoạt lại nút chụp ảnh sau khi xử lý xong
                         captureButton.disabled = false;
                     });
@@ -202,3 +214,39 @@ function saveFrameToFile() {
 
 // Gắn sự kiện click cho nút lưu ảnh
 saveButton.addEventListener('click', saveFrameToFile);
+
+// Thêm chức năng xếp gọn/mở rộng danh sách tỷ lệ xuất hiện
+const toggleProbabilityListButton = document.getElementById('toggle-probability-list');
+const probabilityListContainer = document.getElementById('probability-list-container');
+
+toggleProbabilityListButton.addEventListener('click', () => {
+    if (probabilityListContainer.classList.contains('collapsed')) {
+        probabilityListContainer.classList.remove('collapsed');
+        toggleProbabilityListButton.textContent = 'Xếp gọn';
+    } else {
+        probabilityListContainer.classList.add('collapsed');
+        toggleProbabilityListButton.textContent = 'Mở rộng';
+    }
+});
+
+
+// Cập nhật thời gian hiện tại
+function updateTime() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const currentTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+
+    const day = now.getDate();
+    const month = now.getMonth() + 1; // Tháng bắt đầu từ 0
+    const year = now.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+
+    timeInfo.textContent = `${formattedDate} ${currentTime}`;
+}
+
+updateTime();
+setInterval(updateTime, 60000); // Cập nhật mỗi phút

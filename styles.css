@@ -9,23 +9,97 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: background 1s ease; /* Thêm transition để làm mượt chuyển đổi màu nền */
 }
 
-/* Info styles */
 .info {
     position: fixed;
     top: 10px;
     left: 10px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.8);
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#probability-list-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-height: 300px; /* Điều chỉnh chiều cao tối đa */
+    overflow-y: auto;
+    z-index: 10; /* Đảm bảo nó nằm trên cùng */
+}
+
+/* Thêm CSS cho responsive */
+@media (max-width: 600px) {
+    #capture-button {
+        font-size: 20px;
+        padding: 10px;
+    }
+    
+    video {
+        width: 100%;
+        height: auto;
+    }
+
+    .frame {
+        flex-direction: column;
+        padding: 5px;
+    }
+
+    .snapshot {
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .time-info {
+        bottom: 20px;
+        right: 20px;
+        font-size: 14px;
+    }
+
+    body {
+        overflow-y: auto; /* Đảm bảo có thể cuộn theo chiều dọc */
+        padding: 10px;
+    }
+
+
+    .info, 
+    #probability-list-container {
+        top: auto;
+        bottom: 10px;
+        width: calc(100% - 20px);
+        height: auto;
+        left: 10px;
+        right: 10px;
+        text-align: center;
+        padding: 5px;
+        font-size: 12px;
+    }
+}
+/* CSS cho xếp gọn/mở rộng */
+#probability-list-container.collapsed ul {
+    display: none;
+}
+
+#probability-list-container.collapsed {
+    height: auto;
 }
 
 #capture-button {
     font-size: 30px;
+    border-radius: 10px;
 }
 
 #items-list {
@@ -35,6 +109,21 @@ body {
 
 #items-list li {
     margin: 5px 0;
+}
+
+#probability-list-container {
+    text-align: left;
+    margin-top: 20px;
+}
+
+#probability-list-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Toast styles */
@@ -65,6 +154,7 @@ video {
     width: 320px;
     height: 240px;
     border: 1px solid black;
+    border-radius: 10px;
 }
 
 button {
@@ -72,6 +162,7 @@ button {
     padding: 10px 20px;
     font-size: 16px;
     transition: transform 0.3s ease;
+    border-radius: 10px;
 }
 
 .frame {
@@ -84,15 +175,18 @@ button {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 10px;
 }
 
 .snapshot {
     border: 2px solid black;
     margin: 20px;
+    border-radius: 10px;
 }
 
 .gem-display img {
     border: 2px solid black;
+    border-radius: 10px;
 }
 
 .smile-result {
