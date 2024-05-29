@@ -132,9 +132,21 @@ function handleCapture() {
                     .then(gems => {
                         const randomGem = getRandomItem(gems);
                         const gemClassName = randomGem.name.toLowerCase().replace(/ /g, '-');
+
+                        // Cập nhật màu sắc từ JSON
+                        const gemTextColor = randomGem.textColor;
+                        const gemBackgroundGradient = randomGem.backgroundGradient;
+
                         smileResult.className = `smile-result ${gemClassName}`;
                         snapshot.className = `snapshot ${gemClassName}`;
                         gemDisplay.className = `gem-display ${gemClassName}`;
+
+                        // Cập nhật màu sắc thông báo và màu nền
+                        smileResult.style.color = gemTextColor;
+                        smileResult.style.backgroundImage = gemBackgroundGradient;
+                        gemDisplay.style.borderColor = gemTextColor;
+                        toast.style.color = gemTextColor;
+                        toast.style.backgroundImage = gemBackgroundGradient;
 
                         smileResult.innerText = `Khuôn mặt được nhận diện! Bạn nhận được: ${randomGem.name}`;
                         gemDisplay.innerHTML = `<img src="${randomGem.image}" alt="${randomGem.name}" class="${gemClassName}">`;
@@ -162,6 +174,13 @@ function handleCapture() {
                 captureButton.classList.remove('spinning');
                 // Kích hoạt lại nút chụp ảnh sau khi xử lý xong
                 captureButton.disabled = false;
+
+                // Xóa màu nền và màu chữ
+                smileResult.style.color = "";
+                smileResult.style.backgroundImage = "";
+                toast.style.color = "";
+                toast.style.backgroundImage = "";
+
             }
         })
         .catch(error => {
@@ -171,6 +190,7 @@ function handleCapture() {
             captureButton.disabled = false;
         });
 }
+
 
 // Gắn sự kiện click cho nút chụp ảnh
 captureButton.addEventListener('click', handleCapture);

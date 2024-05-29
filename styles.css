@@ -254,6 +254,9 @@ video {
     border-radius: 10px;
 }
 
+.snapshot {
+    border-width: 4px;
+}
 .time-info {
     position: fixed;
     bottom: 10px;

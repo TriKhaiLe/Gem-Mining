@@ -1,8 +1,5 @@
-+ hiển thị thêm block thông tin thời gian ở góc phải dưới của trang web
 + thêm nút tạo thêm block cam
-+ chỉnh tỉ lệ các loại đá & hiển thị danh sách
 + resposive cho width dưới 600 bị lỗi hiển thị info và probability, height dưới 900 bị mất element
-+ chuyển lưu màu gem vào json
 + làm title hạn chế bị che 
 
 * Task khó:
