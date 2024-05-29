@@ -2,7 +2,13 @@
 + thêm nút tạo thêm block cam
 + chỉnh tỉ lệ các loại đá & hiển thị danh sách
 + resposive cho width dưới 600 bị lỗi hiển thị info và probability, height dưới 900 bị mất element
++ chuyển lưu màu gem vào json
++ làm title hạn chế bị che 
 
 * Task khó:
 + chuyển logic chọn đá quý qua be, nhận vào ảnh, trả về tên loại đá quý
 + lưu vật phẩm bằng nickname 
+
+* Thắc mắc:
++ vì sao có nhiều #probability-list-container trong css
++ hàm điều chỉnh màu thông báo ở đâu?

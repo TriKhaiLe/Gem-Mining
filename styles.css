@@ -9,6 +9,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow-y: auto; /* Đảm bảo có thể cuộn theo chiều dọc */
 }
 
 .info {
@@ -21,18 +22,6 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-#probability-list-container {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    max-height: 300px; /* Điều chỉnh chiều cao tối đa */
-    overflow-y: auto;
-    z-index: 10; /* Đảm bảo nó nằm trên cùng */
-}
 
 /* Thêm CSS cho responsive */
 @media (max-width: 600px) {
@@ -75,11 +64,11 @@ body {
     }
 
 
-    .info, 
-    #probability-list-container {
-        top: auto;
-        bottom: 10px;
-        width: calc(100% - 20px);
+    .info {
+        /* top phía trái trên cùng */
+        top: 10px;
+        bottom: auto;
+        width: 40%;
         height: auto;
         left: 10px;
         right: 10px;
@@ -87,6 +76,20 @@ body {
         padding: 5px;
         font-size: 12px;
     }
+
+    #probability-list-container {
+        /* top phía trái trên cùng */
+        top: 10px;
+        bottom: auto;
+        width: 40%;
+        height: auto;
+        left: auto;
+        right: 10px;
+        text-align: center;
+        padding: 5px;
+        font-size: 12px;
+    }
+
 }
 /* CSS cho xếp gọn/mở rộng */
 #probability-list-container.collapsed ul {
@@ -112,12 +115,24 @@ body {
 }
 
 #probability-list-container {
-    text-align: left;
-    margin-top: 20px;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-height: 300px; /* Điều chỉnh chiều cao tối đa */
+    overflow-y: auto;
+    z-index: 10; /* Đảm bảo nó nằm trên cùng */
 }
 
 #probability-list-container {
-    position: absolute;
+    text-align: left;
+}
+
+#probability-list-container {
+    position: fixed;
     top: 10px;
     right: 10px;
     background-color: rgba(255, 255, 255, 0.8);
@@ -243,5 +258,5 @@ video {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    color: white; /* Thay đổi màu sắc tùy theo nền */
+    color: black; /* Thay đổi màu sắc tùy theo nền */
 }
